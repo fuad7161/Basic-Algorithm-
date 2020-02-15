@@ -1,0 +1,116 @@
+/*
+its my first dfs code so forgive me if i do wrong anything in my code...
+*/
+
+/*
+Author: Fuadul Hasan(fuadul202@gmail.com)
+BSMRSTU,Gopalganj
+*/
+
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <ctime>
+#include <cassert>
+#include <complex>
+#include <string>
+#include <cstring>
+#include <chrono>
+#include <random>
+#include <queue>
+#include <bitset>
+//#include<bits/stdc++.h>
+using namespace std;
+ 
+int         cinn()              {int x; scanf("%d", &x); return x;}
+long long   scll()              {long long x; scanf("%lld", &x); return x;}
+double      scd()               {double x; scanf("%lf", &x); return x;}
+void        coutt(int x)        {printf("%d ", x);}
+ 
+#define  scll                   scll()
+#define  gcd(a,b)               __gcd(a,b)
+#define  lcm(a,b)               (a*b)/gcd(a,b)
+#define  PI                     acos(-1.0)
+#define  vi                     std::vector<int>
+#define  vll                    std::vector<ll>
+#define  vit                    vector<int> :: iterator
+#define  sit                    set<int> :: iterator
+#define  mpsi                   std::map<string, int>
+#define  pb                     push_back
+#define  ll                     long long int
+#define  ld                     long double
+#define  ull                    unsigned long long int
+#define  min3(a,b,c)            min(a,min(b,c))
+#define  min4(a,b,c,d)          min(d,min(a,min(b,c)))
+#define  max3(a,b,c)            max(a,max(b,c))
+#define  max4(a,b,c,d)          max(d,max(a,max(b,c)))
+#define  nl                     printf("\n");
+#define  no                     printf("No");
+#define  yes                    printf("Yes");
+#define  F                      first
+#define  S                      second
+
+typedef pair<int,int> ii;
+typedef std::vector<ii> vii;
+ 
+const int mod           = 1e9 + 7;
+const int inf           = (int)2e9 + 5;
+const ll  Inf           = (ll)1e18 + 5;
+const int N             = 1e6 + 5;
+const int nn           = 4e5 + 5;
+
+
+vector<vector<int>>adj;
+int n;  //number of vertex
+vector<bool>visited;
+
+void dfs(int v)
+{
+	cout<<v<<" ";
+	visited[v] = true;
+	for(auto u: adj[v]){
+		if(!visited[u]){
+			dfs(u);
+		}
+	}
+}
+
+int solve()
+{
+	int n,e;
+	cin>>n>>e;
+	visited.assign(n,false);
+	adj.assign(n,vector<int>());
+	for(int i=0;i<e;i++){
+		int a,b;
+		cin>>a>>b;
+		adj[a].pb(b);
+	}
+	for(int i=1;i<n;i++){
+		if(!(visited[i])){
+			dfs(i);
+		}
+	}
+}
+
+int main()
+{
+    int test = 1, tc = 0;
+    //scanf("%d", &test);
+   // (void)getchar();
+    //cin >> test;
+    while (test--) {
+        //printf("Case %d: ", ++tc);
+        solve();
+    }
+ 
+    return 0;
+}
