@@ -1,0 +1,57 @@
+/*
+Author: Fuadul Hasan(fuadul202@gmail.com)
+BSMRSTU,Gopalganj
+*/
+#include<bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/detail/standard_policies.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+
+
+typedef tree<
+int,
+null_type,
+less<int>,
+rb_tree_tag,
+tree_order_statistics_node_update>
+ordered_set;
+
+
+int solve()
+{
+	//happy coding
+
+	ordered_set x;
+	x.insert(1);
+	x.insert(2);
+	x.insert(4);
+	x.insert(8);
+	x.insert(16);
+
+	cout<<*x.find_by_order(1)<<endl;
+	cout<<*x.find_by_order(2)<<endl;
+	cout<<*x.find_by_order(4)<<endl;
+	cout<<*x.find_by_order(8)<<endl;
+
+
+	cout<<" "<<endl;
+
+	cout<<x.order_of_key(1)<<endl;
+	cout<<x.order_of_key(2)<<endl;
+	cout<<x.order_of_key(4)<<endl;
+	cout<<x.order_of_key(8)<<endl;
+
+
+
+	//error()
+	return 0;
+}
+
+int main(){
+	int test = 1, tc = 0;
+	//scanf("%d", &test);//(void)getchar();
+	while (test--)solve();
+	return 0;
+}
