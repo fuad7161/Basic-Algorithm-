@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+std::vector<int> g[100];
+int vis[100];
+
+void dfs(int u)
+{
+	vis[u] = 1;
+	cout<<u<<" ";
+	for(int v: g[u]){
+		if(!vis[v]){
+			dfs(v);
+		}
+	}
+}
+
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	for(int i=0;i<m;i++){
+		int a,b;
+		cin>>a>>b;
+		g[a].push_back(b);
+		g[b].push_back(a);
+	}
+	int component=0;
+	for(int i=1;i<n;i++){
+		if(!vis[i]){
+			dfs(i);
+			cout<<endl;
+			component++;
+		}
+	}cout<<endl;
+	cout<<component<<endl;
+
+	return 0;
+}
