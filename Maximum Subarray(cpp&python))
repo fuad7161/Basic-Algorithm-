@@ -1,0 +1,32 @@
+//c++ code....
+#include <bits/stdc++.h>
+using namespace std;
+
+int maximum_Subarray_sum(int a[], int n){
+	int max_sum=a[0],current_sum= a[0];
+	for(int i=1;i<n;i++){
+		current_sum = max(a[i],current_sum+a[i]);
+		if(max_sum<current_sum)
+			max_sum = current_sum;
+	}
+	return max_sum;
+}
+int main(){
+	int n;
+	cin>>n;
+	int a[n+1];
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+	}
+	int max_sum = maximum_Subarray_sum(a,n);
+	cout<<max_sum<<endl;
+}
+
+#python code..
+a = [int(i) for i in input().split()]
+mxs = crs = a[0]
+for i in range(1, len(a)):
+    crs = max(a[i],crs+a[i])
+    if mxs< crs:
+        mxs = crs
+print(mxs)
