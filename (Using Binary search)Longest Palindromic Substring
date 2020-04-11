@@ -1,0 +1,90 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+//BSMRSTU,Gopalganj
+#include<bits/stdc++.h>
+using namespace std;int tc = 1;
+#define happy ios::sync_with_stdio(false);
+#define coding  cin.tie(0);
+#define pb  push_back
+#define mp make_pair
+#define ll long long
+#define pr pair<int, int> 
+#define vpr vector<pr> 
+#define vi std::vector<int>
+#define vll std::vector<ll>
+#define all(n) n.begin(),n.end()
+#define Test printf("Case %d: ",tc++);
+#define YES printf("YES\n");
+#define NO printf("NO\n");
+#define Yes printf("Yes\n");
+#define No printf("No\n");
+const int mod = 1e9 + 7;
+const ll  Inf = (ll)2e18 + 5;
+const int N   = 2e5 + 5;
+
+bool is_paliondrom(string s){
+	string rev = s;
+	reverse(rev.begin(),rev.end());
+	return s==rev;
+}
+
+int good(int x,string s){
+	int n = s.length();
+	for(int l = 0;l+x<=n;l++){
+		if(is_paliondrom(s.substr(l,x))){
+			return l;
+		}
+	}
+	return -1;
+}
+
+string longestPalindrome(string s){
+	int best_len = 0;
+	string best_s = "";
+	int n = s.length();
+	for(int parity: {0,1}){
+		int low = 1,high =  n;
+		if(low%2!=parity) low++;
+		if(high%2!=parity) high--;
+		cout<<low<<" "<<high<<" "<<parity<<endl;
+		while(low <= high){
+			int mid = (low + high)/2;
+			if(mid%2 != parity){
+				mid ++;
+			}
+			if(mid>high){
+				break;
+			}
+			cout<<mid<<endl;
+			int tmp = good(mid,s);
+			if(tmp != -1){
+				if(mid>best_len){
+					best_len = mid;
+					best_s = s.substr(tmp,mid);
+				}
+				low =  mid + 2;
+			}else {
+				high = mid - 2;
+			}
+		}
+	}
+	return best_s;
+}
+
+int solve() 
+{
+	//happy coding
+
+	string s;
+	cin>>s;
+
+	string x = longestPalindrome(s);
+
+	cout<<x<<endl;
+
+	return 0;
+}
+int main(){
+	int test = 1;
+	scanf("%d", &test);
+	while (test--)solve();return 0;
+}
