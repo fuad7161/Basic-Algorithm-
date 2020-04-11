@@ -1,0 +1,68 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+//BSMRSTU,Gopalganj
+#include<bits/stdc++.h>
+using namespace std;int tc = 1;
+#define happy ios::sync_with_stdio(false);
+#define coding  cin.tie(0);
+#define pb  push_back
+#define mp make_pair
+#define ll long long
+#define pr pair<int, int> 
+#define vpr vector<pr> 
+#define vi std::vector<int>
+#define vll std::vector<ll>
+#define all(n) n.begin(),n.end()
+#define Test printf("Case %d: ",tc++);
+#define YES printf("YES\n");
+#define NO printf("NO\n");
+#define Yes printf("Yes\n");
+#define No printf("No\n");
+const int mod = 1e9 + 7;
+const ll  Inf = (ll)2e18 + 5;
+const int N   = 2e5 + 5;
+
+ll comb[31][31];
+
+ll nCr(ll n,ll r){
+	if(r>n) return 0LL;
+	if(r==0||n==r) return 1LL;
+	if(comb[n][r]) return comb[n][r];
+	return comb[n][r] = nCr(n-1,r)+nCr(n-1,r-1);
+}
+
+/*ll nCr(ll n,ll r){
+	ll ans  =1, t = 1;
+	if(n<r) return 0;
+	for(ll i = n;i>r;i--){
+		ans*=i;
+		ans/=t++;
+	}
+	return ans;
+}*/
+
+int solve() 
+{
+	//happy coding
+	ll a,b,c;
+	cin>>a>>b>>c;
+
+	//combination..
+	ll cele = 4;
+	ll sum = 0;
+	while(c-cele>=1){
+		if(cele<=a&&c-cele<=b)
+			sum += nCr(a,cele)*nCr(b,c-cele);
+		//cout<<sum<<endl;
+		cele++;
+	}
+	//ll sum = combination(30,4,30,26);
+
+	cout<<sum<<endl;
+
+	return 0;
+}
+int main(){
+	int test = 1;
+	//scanf("%d", &test);
+	while (test--)solve();return 0;
+}
