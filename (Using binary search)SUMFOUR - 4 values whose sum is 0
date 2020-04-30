@@ -1,0 +1,106 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+//BSMRSTU,Gopalganj
+#include<bits/stdc++.h>
+using namespace std;int tc = 1;
+#define happy ios::sync_with_stdio(false);
+#define coding  cin.tie(0);
+#define mp make_pair
+#define ll long long
+#define Pi atan(1)*4
+#define pb  push_back
+#define vpr vector<pr> 
+#define pr pair<int, int> 
+#define vi std::vector<int>
+#define vll std::vector<ll>
+#define YES printf("YES\n");
+#define NO printf("NO\n");
+#define Yes printf("Yes\n");
+#define No printf("No\n");
+#define all(n) n.begin(),n.end()
+#define point(x) setprecision(x)
+#define Test printf("Case %d: ",tc++);
+#define Unique(c) (c).resize(unique(all(c))-(c).begin())
+#define vout(v) for (auto z: v) cout << z << " "; cout << endl;
+
+const int M = 1e9 + 7;
+const ll  Inf = (ll)2e18 + 5;
+const int N   = 2e5 + 5;
+
+int binary_search(std::vector<ll>& v, int x){
+	int st = 0,lst = v.size()-1,mid;
+	while(st<=lst){
+		int l = 0,x1 = lst,s=  0;
+		mid = (st+lst)/2;
+
+		if(v[mid]==x){
+			int temp = mid+1;
+			while(mid>=l&&v[mid]==x){
+				mid--;
+				s++;
+			}
+			while(temp<=x1&&v[temp]==x){
+				temp++;
+				s++;
+			}
+			//cout<<s<<endl;
+			return s;
+		}
+		if(v[mid]<x){
+			st = mid+1;
+		}else{
+			lst = mid - 1;
+		}
+	}
+
+	return 0;
+}
+
+int solve() 
+{
+	//happy coding
+
+	int n;
+
+	cin>>n;
+	vll a(n),b(n),c(n),d(n);
+	for(int i=0;i<n;i++){
+		cin>>a[i]>>b[i]>>c[i]>>d[i];
+	}
+
+	vll e,f;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			e.pb(a[i]+b[j]);
+		}
+	}
+
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			f.pb((c[i]+d[j])*(-1));
+		}
+	}
+
+	sort(all(e));
+	sort(all(f));
+	int x ,sz = 0,cnt = 0;
+	for(int i=0;i<e.size();){
+		x = e[i];
+		sz = 0;
+		while(i<e.size()&&e[i]==x){
+			sz++;
+			i++;
+		}
+		int sz2 = binary_search(f,x);
+		//cout<<x<<" "<<sz<<" "<<sz2<<endl;
+		cnt += (sz*sz2);
+	}
+
+	cout<<cnt<<endl;
+	
+	return 0;
+}
+int main(){
+	int test = 1;
+	//scanf("%d", &test);
+	while (test--)solve();return 0;
+}
