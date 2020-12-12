@@ -1,0 +1,108 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+//BSMRSTU,Gopalganj
+#include<bits/stdc++.h>
+using namespace std;int tc = 1;
+#define happy ios::sync_with_stdio(false);
+#define coding  cin.tie(0);
+#define F first
+#define S second
+#define mp make_pair
+#define ll long long
+#define Pi atan(1)*4
+#define pb  push_back
+#define vpr vector<pr> 
+#define pr pair<int, int> 
+#define vi std::vector<int>
+#define vll std::vector<ll>
+#define YES printf("YES\n");
+#define NO printf("NO\n");
+#define Yes printf("Yes\n");
+#define No printf("No\n");
+#define all(n) n.begin(),n.end()
+#define point(x) setprecision(x)
+#define Test printf("Case %d: ",tc++);
+#define Unique(c) (c).resize(unique(all(c))-(c).begin())
+#define vout(v) for (auto z: v) cout << z << " "; cout << endl;
+
+#define error(args...) {vector<string>_v=split(#args,',');err(_v.begin(),args);cout<<endl;}
+vector<string> split(const string &s, char c) {vector<string>v; stringstream ss(s); string x;
+while (getline(ss, x, c))v.emplace_back(x); return move(v);} void err(vector<string>::iterator it) {}
+template<typename T, typename... Args>void err(vector<string>::iterator it, T a, Args...args) {
+cout << it->substr((*it)[0] == ' ', it->length()) << " = " << a << " "; err(++it, args...);}
+
+const int M = 1e9 + 7;
+const ll  Inf = (ll)2e18 + 5;
+const int N   = 2e5 + 5;
+ll vis[N],res[N];
+
+ll ar[3];
+ll T[3][3],I[3][3];
+
+void mul(ll A[3][3],ll B[3][3],ll dim){
+	ll res[dim+1][dim+1];
+	for(ll i=1;i<=dim;i++){
+		for(ll j=1;j<=dim;j++){
+			res[i][j] = 0;
+			for(ll k=1;k<=dim;k++){
+				ll x = (A[i][k]%M * B[k][j]%M)%M;
+				res[i][j] = (res[i][j]%M+x%M)%M;
+			}
+		}
+	}
+	for(ll i=1;i<=dim;i++){
+		for(ll j=1;j<=dim;j++){
+			A[i][j] = res[i][j]%M;
+		}
+	}
+}
+
+ll getFib(ll n){
+	if(n<=2) return ar[n];
+	for(ll i=1;i<3;i++){
+		for(ll j=1;j<3;j++){
+			if(i==j)I[i][j] = 1;
+			else I[i][j] = 0;	
+		}
+	}
+
+	for(ll i=1;i<3;i++){
+		for(ll j=1;j<3;j++){
+			if(i==1 and j==1)T[i][j] = 0;
+			else T[i][j] = 1;
+		}
+	}
+	n--;
+
+	while(n){
+		
+		if(n&1) mul(I,T,2);
+		mul(T,T,2);
+			n>>=1;
+	}
+
+	ll x = (((ar[1]%M*I[1][1]%M)%M+ (ar[2]%M *I[2][1])%M))%M;
+	return x;
+}
+
+
+
+int solve() 
+{
+	//happy coding
+
+	ll n;
+	ar[1] = 0,ar[1] = 1;	
+	cin>>n;
+	n++;
+
+	cout<<(getFib(n+2)%M*getFib(n+1)%M)<<endl;
+
+
+	
+	return 0;
+}
+int main(){
+	int test = 1;
+  	scanf("%d", &test);
+  	while (test--)solve();return 0;
+}
