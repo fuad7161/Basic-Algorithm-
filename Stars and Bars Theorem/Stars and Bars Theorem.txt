@@ -1,0 +1,22 @@
+x + y = 5;
+conditions(x,y>=0)
+nCr(n+k-1,k-1)
+k -> group of integers
+n -> number of integers
+| 1 1 1 1 1 -> 0+5 = 5
+1 | 1 1 1 1 -> 1+4 = 5
+1 1 | 1 1 1 -> 2+3 = 5
+1 1 1 | 1 1 -> 3+2 = 5
+1 1 1 1 | 1 -> 4+1 = 5
+1 1 1 1 1 | -> 5+0 = 5
+here all  have 2 group.
+if I have k group then we find k-1 bars in the group.
+and n+k-1 number of place.
+
+x + y + z = 5;
+here  k  = 3;
+group of integers = 3;
+then bar is k-1;
+conditions(x,y,z>=1)
+nCr(n-1,k-1)
+1 | 1 | 1 1 1 -> 1+1+3 = 5
