@@ -1,0 +1,62 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define pb  push_back
+#define vi  vector<int>
+#define all(n) n.begin(),n.end()
+#define vout(v) for (auto z: v) cout << z << " "; cout << endl;
+
+const int mod	= 1e9 + 7;
+const int N   = 3e5 + 5;
+
+int fact[N];
+int factInv[N];
+
+
+int modInv(int a,int n){
+	int res = 1;
+	while(n){
+		if(n&1)res = (res*a)%mod;
+		a = (a*a)%mod;
+		n>>=1;
+	}
+	return res%mod;
+}
+
+int nCr(int n,int r){
+	if(r>n){
+		return 0;
+	}
+	int z = (factInv[r]%mod)*(factInv[n-r])%mod;
+	int x = ((fact[n]%mod)*(z%mod))%mod;
+	return x;
+}
+
+signed main(){
+	
+	//  modular arithmatic inverse...
+	//find nCr using moudlar arithmatic inverse......
+	//initialize factorial...
+	//fact[0] = fact[1] = factInv[1] = factInv[0] = 1;
+
+
+	fact[0] = factInv[0] = 1;
+	for(int i=1;i<=N;i++){
+		fact[i] = (fact[i-1]*i)%mod;
+		factInv[i] = modInv(fact[i],mod-2)%mod;
+	}
+
+	int t;
+	cin>>t;
+	while(t--){
+		int n,r;
+		cin>>n>>r;
+
+		int ncr = nCr(n,r);
+		cout<<ncr<<endl;
+	}
+
+	return 0;
+}
