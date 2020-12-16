@@ -1,0 +1,36 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define pb  push_back
+#define vi  vector<int>
+#define all(n) n.begin(),n.end()
+#define vout(v) for (auto z: v) cout << z << " "; cout << endl;
+
+const int N   = 4e5 + 5;
+
+int power(int a,int n,int m){
+	int res = 1;
+	while(n){
+		if(n&1){
+			res = ((res%m)*(a%m)%m);
+		}
+		a = ((a%m)*(a%m))%m;
+		n >>= 1;
+	}
+	return res;
+}
+
+signed main(){
+	
+	/// modular multiaplicative inverse.....
+
+	int a,m;
+	cin>>a>>m;
+	cout<<"a^-1 = "<<power(a,m-2,m)<<endl;
+
+
+
+	return 0;
+}
