@@ -1,0 +1,10 @@
+//inline int add(int a, int b, int mod) {a += b ; return a >= mod ? a - mod : a ;}
+//#define ll long long
+
+ll comb[1000][1000];
+ll nCr(ll n,ll r){
+	if(r>n) return 0LL;
+	if(r==0||n==r) return 1LL;
+	if(comb[n][r]) return comb[n][r];
+	return comb[n][r] = add(nCr(n-1,r),nCr(n-1,r-1),M);
+}
