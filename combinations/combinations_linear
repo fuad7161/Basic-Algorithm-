@@ -1,0 +1,12 @@
+long long nCr(long long n,long long k){
+	long long ans = 1;
+	if(k > n -k){
+		k = n-k;
+	}
+
+	for(long long i=1;i<=k;i++){
+		ans *= (n-i+1);
+		ans /= i;
+	}
+	return ans;
+}
