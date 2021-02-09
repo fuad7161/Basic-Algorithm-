@@ -10,3 +10,16 @@ long long nCr(long long n,long long k){
 	}
 	return ans;
 }
+
+
+//another code...
+ll nCr(ll n,ll k){
+	ll ans = 1;
+	int j = 1;
+	for(ll i = n;i>k;i--,j++){
+		ans *= i;
+		ans /= j;
+
+	}
+	return ans;
+}
