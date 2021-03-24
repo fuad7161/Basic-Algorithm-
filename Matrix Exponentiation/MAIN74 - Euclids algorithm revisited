@@ -1,0 +1,174 @@
+//Author: Fuadul Hasan(fuadul202@gmail.com)
+//BSMRSTU,Gopalganj
+//#include<bits/stdc++.h>
+#define _USE_MATH_DEFINES
+#include <set>
+#include <map>
+#include <list>
+#include <queue>
+#include <stack>
+#include <cmath>
+#include <ctime>
+#include <cstdio>
+#include <string>
+#include <vector>
+#include <bitset>
+#include <random>
+#include <cassert>
+#include <cstring>
+#include <sstream>
+#include <complex>
+#include <numeric>
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <unordered_set>
+#include <unordered_map>
+using namespace std;
+
+//int input........
+template <typename T> inline void readline(T &n) {n = 0; int f = 1; register int ch = getchar();
+for (; !isdigit(ch); ch = getchar()) if (ch == '-') f = -1;for (; isdigit(ch); ch = getchar()) n = (n << 3) + (n << 1) + ch - '0';n = n * f;}
+template <typename T, typename TT> inline void readline(T &n, TT &m) { readline(n); readline(m); }
+template <typename T, typename TT, typename TTT> inline void readline(T &n, TT &m, TTT &l) { readline(n, m); readline(l);}
+// long long input........
+template <typename T> inline void readlinel(T &n) {n = 0; long long f = 1; register long long ch = getchar();
+for (; !isdigit(ch); ch = getchar()) if (ch == '-') f = -1;for (; isdigit(ch); ch = getchar()) n = (n << 3) + (n << 1) + ch - '0';n = n * f;}
+template <typename T, typename TT> inline void readlinel(T &n, TT &m) { readlinel(n); readlinel(m); }
+template <typename T, typename TT, typename TTT> inline void readlinel(T &n, TT &m, TTT &l) { readlinel(n, m); readlinel(l);}
+//debug..........
+#define error(args...) {vector<string>_v=split(#args,',');err(_v.begin(),args);cout<<endl;}
+vector<string> split(const string &s, char c) {vector<string>v; stringstream ss(s); string x;while (getline(ss, x, c))v.emplace_back(x); return move(v);} void err(vector<string>::iterator it) {}
+template<typename T, typename... Args>void err(vector<string>::iterator it, T a, Args...args) {cout << it->substr((*it)[0] == ' ', it->length()) << " = " << a << " "; err(++it, args...);}
+
+//............ignore it..................//
+#define F first
+#define S second
+
+#define Pi atan(1)*4
+#define mp make_pair
+#define pb  push_back
+const int M	= 1e9 + 7;
+
+#define ld  long double
+#define ll  long long int
+#define happy cin.tie(0);
+
+#define point(x) setprecision(x)
+void print(int n){printf("%d\n",n);}
+#define Test printf("Case %d: ",tc++);
+int length(string s){return s.size();}
+void printl(ll n){printf("%I64d\n", n);}
+#define mem(a)  memset(a , 0 ,sizeof a)
+#define memn(a) memset(a , -1 ,sizeof a)
+
+#define coding ios::sync_with_stdio(false);
+#define Unique(c) (c).resize(unique(all(c))-(c).begin())
+void print(int n,int m){printf("%d ",n);printf("%d\n",m);}
+void printl(ll n,ll m){printf("%I64d ",n);printf("%I64d\n",m);}
+#define vout(v) for (auto z: v) cout << z << " "; cout << endl;
+
+int length(long long x){int l = 0;for(long long i=x;i;i/=10)l++;return l;}
+int dx[8]= {1,0,-1,0,-1,-1,1,1};int dy[8]= {0,1,0,-1,-1,1,-1,1}; int tc = 1;
+void print(int n,int m,int k){printf("%d ",n);printf("%d ",m);printf("%d\n",k);}
+void print(ll n,ll m,ll k){printf("%I64d ",n);printf("%I64d ",m);printf("%I64d\n",k);}
+long long power(long long a,long long n){ll res = 1;while(n){if(n&1) res = ((res%M)*(a%M))%M;a = ((a%M)*(a%M))%M;n>>=1;}return res%M;}
+
+inline void read(std::vector<int> &v){for(int i=0;i<(int)v.size();i++){readline(v[i]);}}
+inline void read(std::vector<ll> &v){for(int i=0;i<(int)v.size();i++){readlinel(v[i]);}}
+template<class T> bool remin(T& a, const T& b) { return a > b ? a = b, 1 : 0; }
+template<class T> bool remax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+inline void read(int v[],int n){for(int i=0;i<n;i++){readline(v[i]);}}
+inline void read(ll v[],int n){for(int i=0;i<n;i++){readlinel(v[i]);}}
+
+inline int add(int a, int b, int mod) {a += b ; return a >= mod ? a - mod : a ;}
+inline int sub(int a, int b, int mod) {a -= b ; return a < 0 ? a + mod : a ;}
+inline int mul(int a, int b, int mod) {return (ll)a * b % mod ;}
+
+#define   pr 	pair<int, int> 
+#define   vpr 	vector<pr> 
+#define   vi   	std::vector<int>
+#define   vll  	std::vector<ll>
+#define   all(n) n.begin(),n.end()
+
+
+const int Inf           = (int)2e9 + 5;
+const ll  Lnf           = (ll)2e18 + 5;
+const int N             = 5e5 + 5;
+const int NN            = 1e6 + 5;
+
+ll ar[3];
+ll I[3][3],T[3][3];
+
+
+void mul(ll A[3][3], ll B[3][3], int dim){
+    ll res[dim+1][dim+1];
+    for(ll i=1;i<3;i++){
+        for(ll j=1;j<3;j++){
+            res[i][j] = 0;
+            for(ll k=1;k<3;k++){
+                ll x = (A[i][k]%M * B[k][j]%M)%M;
+                res[i][j] = (res[i][j]%M+x%M)%M;
+            }
+        }
+    }
+    for(ll i=1;i<=dim;i++){
+        for(ll j=1;j<=dim;j++){
+            A[i][j] = res[i][j];
+        }
+    }
+}
+
+ll fib(ll n){
+    //error(n);
+    if(n<=2) return ar[n];
+    for(ll i=1;i<3;i++){
+        for(ll j=1;j<3;j++){
+            if(i == j)I[i][j] = 1;
+            else I[i][j] = 0;
+            if(i == 1 and j == 1)T[i][j] = 0;
+            else T[i][j] = 1;
+        }
+    }
+
+ //   n--;
+
+    while(n){
+        if(n&1)mul(I,T,2);
+        mul(T,T,2);
+        n >>= 1LL;
+    }
+
+   // error(ar[1],I[1][1],ar[2],I[2][1]);
+    return ((ar[1]%M*I[1][1]%M)%M + (ar[2]%M*I[2][1]%M)%M)%M;
+
+}
+
+int solve() 
+{
+    //happy coding
+    ar[1] = ar[2] = 1;
+    int t;
+    cin>>t;
+    while(t--){
+        ll n;
+        cin>>n;
+        if(n == 0){
+            cout<<0<<endl;
+        }else if(n == 1){
+            cout<<2<<endl;
+        }
+        else  cout<<fib(n+2)<<endl;
+    }
+
+
+
+
+    return 0;
+    //error();
+}
+int main(){
+    int test = 1;
+    //readline(test);//(void)getchar();
+    while (test--)solve();return 0;
+}
