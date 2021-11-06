@@ -22,88 +22,45 @@
 #include <unordered_set>
 #include <unordered_map>
 using namespace std;
-
-struct node{
-	int key;
-	struct node *left , *right;
+struct Node{
+public:
+    int data;
+    Node *lnext, *rnext;
+    Node(int val){
+        data = val;
+        lnext = NULL;
+        rnext = NULL;
+    }
 };
-
-struct node *newNode(int item){
-	struct node *temp = (struct node *)malloc(sizeof(struct node));
-	temp->key = item;
-	temp->left = temp -> right = NULL;
-	return temp;
+Node *creatBST(Node *head, int val){
+    if (head == NULL){
+        return new Node(val);
+    }
+    if (val < head->data){
+        head->lnext=creatBST(head->lnext, val);
+    }
+    else{
+       head->rnext=creatBST(head->rnext, val);
+    }
+    return head; 
 }
-
-void inorder(struct node *root){
-	if(root != NULL){
-		inorder(root -> left);
-		cout<<root->key<<"->";
-		inorder(root->right);
-	}
+void inorder(Node *head){
+    if (head == NULL){
+        return;
+    }
+    inorder(head->lnext);
+    cout << head->data << " ";
+    inorder(head->rnext);
 }
-
-struct node *insert(struct node *node, int key){
-	if(node == NULL)return newNode(key);
-	if(key < node->key){
-		node->left = insert(node->left,key);
-	}else{
-		node->right = insert(node->right , key);
-	}
-	return node;
-}
-
-struct node *minValueNode(struct node *node){
-	struct node *current = node;
-	while(current and current->left != NULL){
-		current = current->left;
-	}
-	return current;
-}
-
-struct node *deleteNode(struct node *root, int key){
-	if(root == NULL)return root;
-	if(key < root->key){
-		root->left = deleteNode(root->left , key);
-	}else if(key > root->key){
-		root->right = deleteNode(root->right , key);
-	}else{
-		if(root -> left == NULL){
-			struct node *temp = root->right;
-			free(root);
-			return temp;
-		}else if(root->right == NULL){
-			struct node *temp = root->left;
-			free(root);
-			return temp;
-		}
-		struct node *temp = minValueNode(root->right);
-		root->key = temp->key;
-		root->right = deleteNode(root->right , temp->key);
-	}
-	return root;
-}
-
 int main(){
-	cin.tie(0);ios::sync_with_stdio(false);
 	
-	struct node *root = NULL;
-	root = insert(root, 8);
-	root = insert(root, 3);
-	root = insert(root, 1);
-	root = insert(root, 6);
-	root = insert(root, 7);
-	root = insert(root, 10);
-	root = insert(root, 14);
-	root = insert(root, 4);
-
-	cout << "Inorder traversal: ";
-	inorder(root);
-
-	cout << "\nAfter deleting 10\n";
-	root = deleteNode(root, 10);
-	cout << "Inorder traversal: ";
-	inorder(root);
-
-	return 0;
+    Node *root = NULL;
+    root = creatBST(root, 5);
+    creatBST(root, 1);
+    creatBST(root, 3);
+    creatBST(root, 4);
+    creatBST(root, 2);
+    creatBST(root, 7);
+    creatBST(root, 6);
+    inorder(root);
 }
