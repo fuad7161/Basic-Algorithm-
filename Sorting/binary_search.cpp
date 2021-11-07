@@ -25,35 +25,43 @@ using namespace std;
 
 
 int main(){
-	cin.tie(0);ios::sync_with_stdio(false);
-	
-	int n,val;
-	cin>>n>>val;
-	
-	int a[n];
-	for(int i=0;i<n;i++){
-		cin>>a[i];
-	}
-	int l = 0;
-	int r = n-1;
-	int pos = -1;
-	int loop = 100;
-	while(loop--){
-		int mid = (l+r)/2;
-		if(a[mid] < val){
-			l = mid+1;
-		}else{
-			r = mid;
-			pos = r;
-		}
-	}
+    cin.tie(0);ios::sync_with_stdio(false);
+       
+    int n,val;
+    cin>>n;
 
-	if(a[pos] == val){
-		cout<<val<<" is found"<<endl;
-	}else{
-		cout<<val<<" val not found"<<endl;
-	}
-	
+    cin>>val;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
 
-	return 0;
+    int l = 0;
+    int r = n-1;
+
+    int pos = 0;
+    int lp = 20;
+    while(l<r){
+        int mid = (l+r)/2;
+        if(a[mid] == val){
+            cout<<"Yes"<<endl;
+            return 0;
+        }
+        if(a[mid] <= val){
+            l = mid+1;
+        }else{
+            r = mid-1;
+        }
+    }
+    
+    if(a[l] == val){
+        cout<<"yes"<<endl;
+    }else{
+        cout<<-1<<endl;
+    }
+
+
+    
+
+    return 0;
 }
