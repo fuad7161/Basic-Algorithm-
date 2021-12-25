@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+const int N = 1e5+5;
+int n,m;
+#define blk 422
+struct query{
+	int l, r, id;
+}q[N];
+unordered_map<int,int>fre;
+int a[N];
+int cnt = 0;
+int ans[N];
+
+bool comp(query a, query b){
+	if(a.l / blk != b.l / blk){
+		return a.l < b.l;
+	}else{
+		if(a.l / blk & 1){
+			return a.r > b.r;
+		}else{
+			return a.r < b.r;
+		}
+	}
+}
+
+
+void add(int i){
+	if(fre[a[i]] == a[i]) cnt--;
+	fre[a[i]]++;
+	if(fre[a[i]] == a[i]) cnt++;
+}
+
+void remove(int i){
+	if(fre[a[i]] == a[i]) cnt--;
+	fre[a[i]]--;
+	if(fre[a[i]] == a[i]) cnt++;
+}
+
+int main(){
+	cin.tie(0);ios::sync_with_stdio(false);
+
+	cin>>n>>m;
+
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+	}
+
+	for(int i=0;i<m;i++){
+		cin>>q[i].l>>q[i].r;
+		q[i].id = i;
+	}
+
+	sort(q,q+m , comp);
+	// for(int i=0;i<m;i++){
+	// 	cout<<q[i].l<<" "<<q[i].r<<endl;
+	// }
+	int cur_l = 0;
+	int cur_r = -1;
+	for(int i=0;i<m;i++){
+		int L = q[i].l-1;
+		int R = q[i].r-1;
+		while(cur_r<R)add(++cur_r);
+		while(cur_l<L)remove(cur_l++);
+		while(cur_l>L)add(--cur_l);
+		while(cur_r>R)remove(cur_r--);
+		ans[q[i].id] = cnt;
+	}
+
+	for(int i=0;i<m;i++){
+		cout<<ans[i]<<endl;
+	}
+
+	return 0;
+}
