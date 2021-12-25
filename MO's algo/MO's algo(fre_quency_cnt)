@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+const int N = 1e5+5;
+
+struct query{
+	int l;
+	int r;
+	int id;
+} Q[N];
+vector<int>a(N);
+int n;
+int cnt[N];
+int ans[N];
+int cntt = 0;
+bool comp(query a, query b){
+	if(a.r != b.r) return a.r < b.r;
+	return a.l < b.l;
+}
+
+void add(int i){
+	if(cnt[a[i]] == 0){
+		cntt++;
+	}
+	cnt[a[i]]++;
+}
+
+void remove(int i){
+	if(cnt[a[i]] == 1){
+		cntt--;
+	}
+	cnt[a[i]]--;
+}
+
+int main(){
+	cin.tie(0);ios::sync_with_stdio(false);
+	cin>>n;
+	int q;
+	cin>>q;
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+	}
+
+	for(int i=0;i<q;i++){
+		cin>>Q[i].l>>Q[i].r;
+		Q[i].id = i;
+	}
+
+	sort(Q,Q+q , comp);
+
+	int cur_l = 0;
+	int cur_r = -1;
+	for(int i=0;i<q;i++){
+		int L = Q[i].l-1;
+		int R = Q[i].r-1;
+		while(cur_r<R) add(++cur_r);
+		while(cur_l<L) remove(cur_l++);
+		while(cur_l < L) add(++cur_l);
+		while(cur_r>R) remove(cur_r--);
+		ans[Q[i].id] = cntt;
+	}
+
+
+	for(int i=0;i<q;i++){
+		cout<<ans[i]<<endl;
+	}
+
+
+
+	return 0;
+}
