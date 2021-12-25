@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+const int N = 1e6+5;
+#define ll long long
+const int BLOCK_SIZE = 442;
+struct query{
+	int l;
+	int r;
+	int id;
+} Q[N];
+vector<int>a(N);
+int n;
+int cnt[N];
+ll ans[N];
+ll cntt = 0;
+bool comp(query a, query b){
+	if(a.l / BLOCK_SIZE != b.l / BLOCK_SIZE){
+		return a.l<b.l;
+	}
+	if(a.l / BLOCK_SIZE & 1){
+		return a.r < b.r;
+	}else{
+		return a.r>b.r;
+	}
+}
+
+void add(int i){
+	cntt -= (ll)((ll)cnt[a[i]]*(ll)cnt[a[i]]*(ll)a[i]*1LL);
+	cnt[a[i]]++;
+	cntt += (ll)((ll)cnt[a[i]]*(ll)cnt[a[i]]*(ll)a[i]*1LL);
+}
+
+void remove(int i){
+	cntt -= (ll)((ll)cnt[a[i]]*(ll)cnt[a[i]]*(ll)a[i]*1LL);
+	cnt[a[i]]--;
+	cntt +=(ll)(cnt[a[i]]*(ll)cnt[a[i]]*(ll)a[i]*1LL);
+}
+
+int main(){
+	cin.tie(0);ios::sync_with_stdio(false);
+	int q;
+	scanf("%d%d", &n, &q);
+	for(int i=0;i<n;i++){
+		scanf("%d", &a[i]);
+	}
+
+	for(int i=0;i<q;i++){
+		scanf("%d%d",&Q[i].l,&Q[i].r);
+		Q[i].id = i;
+	}
+
+	sort(Q,Q+q , comp);
+	int cur_l = 0;
+	int cur_r = -1;
+	for(int i=0;i<q;i++){
+		int L = Q[i].l-1;
+		int R = Q[i].r-1;
+		while(cur_r<R) add(++cur_r);
+		while(cur_l<L) remove(cur_l++);
+		while(cur_l > L) add(--cur_l);
+		while(cur_r>R) remove(cur_r--);
+		ans[Q[i].id] = cntt;
+	}
+
+
+	for(int i=0;i<q;i++){
+		printf("%lld\n" , ans[i]);
+	}
+
+
+
+	return 0;
+}
