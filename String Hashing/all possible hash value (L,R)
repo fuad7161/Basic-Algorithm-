@@ -1,0 +1,19 @@
+int dp[N] , inv[N];
+void init(string const& s){
+    const int p = 31;
+    int p_pow = 1;
+    dp[0] = (s[0] - 'a' + 1);
+    inv[0] = 1;
+    for(int i=1;i<s.size();i++){
+        char c = s[i]-'a'+1;
+        p_pow = mul(p_pow , p, M);
+        inv[i] = Inv_pow(p_pow , M-2);
+        dp[i] = add(dp[i-1] , mul(c,p_pow,M) , M);
+    }
+}
+int substring_hash(int l, int r){
+    int res = dp[r];
+    if(l>0)res -= dp[l-1];
+    res = mul(res , inv[l] , M);
+    return res;
+}
