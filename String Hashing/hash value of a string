@@ -1,0 +1,21 @@
+ll compute_hash(string const& s){
+    const int p = 31;
+    ll hash_val = 0;
+    ll p_pow = 1;
+    for(char c:s){
+        hash_val = (hash_val+(c-'a'+1)*p_pow)%M;
+        p_pow = (p_pow*p)%M;
+    }
+    return hash_val;
+}
+
+int compute_hash1(string const& s){
+    const int p = 31;
+    int hash_val = 0;
+    int p_pow = 1;
+    for(auto c: s){
+        hash_val = add(hash_val , mul((c-'a'+1),p_pow,M) , M);
+        p_pow = mul(p_pow,p,M);
+    }
+    return hash_val;
+}
