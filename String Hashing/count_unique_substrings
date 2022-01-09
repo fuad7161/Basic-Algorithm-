@@ -1,0 +1,61 @@
+int dp[N] , inv[N];
+int cnt_unique_sub(string const& s){
+    int n = s.size();
+    const int p = 31;
+    dp[0] = s[0]-'a'+1;
+    inv[0] = 1;
+    int p_pow = 1;
+    for(int i=1;i<n;i++){
+        int c = s[i] - 'a'+1;
+        p_pow = mul(p_pow , p , M);
+        dp[i] = add(dp[i-1] , mul(c,p_pow , M) ,M);
+        inv[i] = Inv_pow(p_pow , M-2);
+    }
+
+    auto sub_hash = [&](int l, int r)->int{
+        int res = dp[r];
+        if(l>0)res = (res+M-dp[l-1])%M;
+        res = mul(res , inv[l] , M);
+        return res;
+    };
+    int cnt =0;
+    for(int i=1;i<=n;i++){
+        set<int>st;
+        for(int j=0;j<=n-i;j++){
+            int h = sub_hash(j,j+i-1);
+            st.insert(h);
+        }
+        cnt += st.size();
+    }
+
+    return cnt;
+
+}
+
+int cnt_unique_substring(string const& s){
+    int n = s.size();
+    const int p = 31;
+    vector<int>p_pow(n);
+    p_pow[0] = 1;
+    for(int i=1;i<n;i++){
+        p_pow[i] = mul(p_pow[i-1]  , p , M);
+    }
+
+    vector<ll> h(n+1, 0);
+    for(int i=0;i<n;i++){
+        h[i+1] = add(h[i],mul(s[i]-'a'+1 , p_pow[i] , M),M);
+    }
+
+    int cnt = 0;
+    for(int l=1;l<=n;l++){
+        set<ll>hs;
+        for(int i=0;i<=n-l;i++){
+            ll cur_h = (h[i+1] + M-h[i])%M;
+            cur_h = (cur_h*p_pow[n-i-1])%M;
+            hs.insert(cur_h);
+        }
+        cnt += hs.size();
+    }
+    return cnt;
+
+}
