@@ -13,7 +13,7 @@ void init(string const& s){
 }
 int substring_hash(int l, int r){
     int res = dp[r];
-    if(l>0)res -= dp[l-1];
+    if(l>0)res = (res -dp[l-1]+M)%M;
     res = mul(res , inv[l] , M);
     return res;
 }
