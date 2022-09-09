@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//debug..........
+#define error(args...) {vector<string>_v=split(#args,',');err(_v.begin(),args);cout<<endl;}
+vector<string> split(const string &s, char c) {vector<string>v; stringstream ss(s); string x;while (getline(ss, x, c))v.emplace_back(x); return move(v);} void err(vector<string>::iterator it) {}
+template<typename T, typename... Args>void err(vector<string>::iterator it, T a, Args...args) {cout << it->substr((*it)[0] == ' ', it->length()) << " = " << a << " "; err(++it, args...);}
+#define int long long
+
+const int N = 1003;
+int bit[N][N];
+int n,m;
+int sum(int x, int y){
+    int ret = 0;
+    for(int i=x;i>0;i -= (i&-i)){
+        for(int j=y;j>0;j -= (j&-j)){
+            ret += bit[i][j];
+        }
+    }
+    return ret;
+}
+
+int sum(int x1, int y1, int x2, int y2){
+    return sum(x2,y2)-sum(x1-1,y2)-sum(x2 , y1-1)+sum(x1-1,y1-1);
+}
+
+
+void upd(int x, int y , int val){
+    for(int i=x;i<=n;i += (i&-i)){
+        for(int j=y;j<=m; j +=(j&-j)){
+            bit[i][j] += val;
+        }
+    }
+}
+
+signed solve(){
+
+    int q;
+    cin>>n>>q;
+    m = n;
+    memset(bit , 0 , sizeof bit);
+
+    string s[n];
+    for(int i=0;i<n;i++){
+        cin>>s[i];
+        for(int j=0;j<n;j++){
+            upd(i+1 , j+1 , (s[i][j] == '*'));
+        }
+    }
+
+    while(q--){
+        int t;
+        cin>>t;
+        if(t == 1){
+            int x,y;
+            cin>>x>>y;
+            int val = 0;
+            if(s[x-1][y-1] == '*'){
+                s[x-1][y-1] = '.';
+                val = -1;
+            }
+            else {
+                s[x-1][y-1] = '*';
+                val = 1;
+            }
+            upd(x , y , val);
+        }else{
+            int x1,y1,x2,y2;
+            cin>>x1>>y1>>x2>>y2;
+            cout<<sum(x1,y1,x2,y2)<<endl;
+        }
+    }
+
+    return 0;
+}
+signed main(){
+    ios::sync_with_stdio(false);cin.tie(0);int test = 1;
+    // cin>>test;
+    while (test--)solve();return 0;
+}
