@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+//debug..........
+#define error(args...) {vector<string>_v=split(#args,',');err(_v.begin(),args);cout<<endl;}
+vector<string> split(const string &s, char c) {vector<string>v; stringstream ss(s); string x;while (getline(ss, x, c))v.emplace_back(x); return move(v);} void err(vector<string>::iterator it) {}
+template<typename T, typename... Args>void err(vector<string>::iterator it, T a, Args...args) {cout << it->substr((*it)[0] == ' ', it->length()) << " = " << a << " "; err(++it, args...);}
+#define int long long
+ 
+const int N = 1e5+10;
+int tree[N][26] , idx;
+int len[N] , link[N] , t;
+char s[N];
+int ans[N];
+ 
+void extend(int p){
+    while(s[p-len[t] - 1] != s[p])t = link[t];
+    int x = link[t];
+    while(s[p-len[x]-1] != s[p])x = link[x];
+    int c = s[p]-'a';
+    if(!tree[t][c]){
+        tree[t][c] = ++idx;
+        len[idx] = len[t]+2;
+        link[idx] = len[idx]==1?2: tree[x][c];
+        ans[idx] = 1+ans[link[idx]];
+    }
+    t = tree[t][c];
+}
+ 
+signed solve(){
+ 
+    len[1] = -1;
+    link[1] = 1;
+    len[2] = 0;
+    link[2] = 1;
+    idx = t = 2;
+ 
+    string tem;
+    cin>>tem;
+    int n = tem.size();
+    for(int i=1;i<=n;i++){
+        s[i] = tem[i-1];
+    }
+ 
+    int cnt = 0;
+    for(int i=1;i<=n;i++){
+        extend(i);
+        // cout<<ans[t]<<endl;
+        cnt += ans[t];
+    }
+ 
+    cout<<cnt<<endl;
+ 
+    return 0;
+}
+signed main(){
+    ios::sync_with_stdio(false);cin.tie(0);int test = 1;
+    // cin>>test;
+    while (test--)solve();return 0;
+} 
