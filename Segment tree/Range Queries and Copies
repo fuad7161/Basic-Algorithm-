@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//debug..........
+#define error(args...) {vector<string>_v=split(#args,',');err(_v.begin(),args);cout<<endl;}
+vector<string> split(const string &s, char c) {vector<string>v; stringstream ss(s); string x;while (getline(ss, x, c))v.emplace_back(x); return move(v);} void err(vector<string>::iterator it) {}
+template<typename T, typename... Args>void err(vector<string>::iterator it, T a, Args...args) {cout << it->substr((*it)[0] == ' ', it->length()) << " = " << a << " "; err(++it, args...);}
+#define int long long
+
+const int N = 2e5+5;
+int a[N];
+int node[N*50] , l[N*50] , r[N*50] , root[N];
+int idx = 1;
+int new_root = 0;
+
+void build(int pos , int left ,int right){
+    if(left == right){
+        node[pos] = a[left];
+        return;
+    }
+    int mid = (left + right)/2;
+    l[pos] = ++idx;
+    r[pos] = ++idx;
+    build(l[pos] , left , mid);
+    build(r[pos] , mid+1 , right);
+    node[pos] = node[l[pos]]+node[r[pos]];
+}
+
+int update(int pos , int left , int right , int x ,int val){
+    if(left > x or right < x)return pos;
+    int id = ++idx;
+    if(left == right){
+        node[id] = val;
+        return id;
+    }
+    int mid = (left + right) / 2;
+    l[id] = update(l[pos] , left , mid , x , val);
+    r[id] = update(r[pos] , mid+1,  right , x , val);
+    node[id] = node[l[id]]+node[r[id]];
+    return id;
+}
+
+int query(int pos , int left , int right , int x , int y){
+    if(left > y or right < x)return 0;
+    if(left >= x and right <= y)return node[pos];
+    int mid = (left + right )/2;
+    return query(l[pos] , left , mid , x , y)+query(r[pos] , mid+1 , right , x, y);
+}
+
+signed solve(){
+
+    int n , q;
+    cin>>n >> q;
+
+    for(int i=1;i<=n;i++) {
+        cin>>a[i];
+    }
+
+    root[0] = 1;
+
+    build(root[0] , 1, n);
+
+    while(q--){
+        int t;
+        cin>>t;
+        if(t == 1){
+            int u , x,val;
+            cin>>u>>x>>val;
+            // error(u)
+            root[u-1] = update(root[u-1] , 1,n,x,val);
+        }else if(t == 2){
+            int u , l , r;
+            cin>>u>>l>>r;
+            cout<<query(root[u-1] , 1,n,l,r)<<endl;
+        }else{
+            int x;cin>>x;
+            // error(x-1 , new_root)
+            root[++new_root] = root[x-1];
+        }
+    }
+
+    return 0;
+}
+signed main(){
+    ios::sync_with_stdio(false);cin.tie(0);int test = 1;
+    // cin>>test;
+    while (test--)solve();return 0;
+}
